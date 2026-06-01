@@ -90,8 +90,7 @@ while run:
   for e in event.get():
     if e.type == QUIT:
       run = False
-#    if e.type == KEYDOWN:
-#      if e.key == K_SPACE: bullets.add(player.fire())
+
   
   if lost < 4 and score < 10:
     keys_presed = key.get_pressed()
