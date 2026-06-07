@@ -28,47 +28,50 @@ class Player(DinamicSprites):
   def update(self):
     self.rect.x += self.speed
   
-  def fire(self):
-    global bullets
-    bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20)
-    bullet.rect.centerx = self.rect.centerx
-    bullets.add(bullet)
+#  def fire(self):
+#    global bullets
+#    bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20)
+#    bullet.rect.centerx = self.rect.centerx
+#    bullets.add(bullet)
      
 # clase del jugador principal
-class Enemy(DinamicSprites):
+class Ball(DinamicSprites):
   def update(self):
     global lost
-    self.rect.y += self.speed
+#    self.rect.y += self.speed
     if self.rect.top >= 500:
       self.rect.x = randint(0,420)
       self.rect.y = -45
       self.speed = randint(1,6)
       lost += 1
       
-class Bullet(DinamicSprites):
-  def __init__(self, player_image, player_x, player_y, size_x, size_y):
-    super().__init__(player_image, player_x, player_y, size_x, size_y, -15)
-    
-  def update(self):
-    self.rect.y += self.speed
+#class Bullet(DinamicSprites):
+#  def __init__(self, player_image, player_x, player_y, size_x, size_y):
+#    super().__init__(player_image, player_x, player_y, size_x, size_y, -15)
+#    
+#  def update(self):
+#    self.rect.y += self.speed
          
 
 
 init()
 window = display.set_mode((700,500))
 display.set_caption("Tirador")
-background = GameSprite("galaxy.jpg", 0, 0 ,700, 500)
+#background = GameSprite("galaxy.jpg", 0, 0 ,700, 500)
+
 clock = time.Clock()
 lost = 0
 
 #Sprites
-player = Player("rocket.png", 300 , 420, 45, 70)
-monsters = sprite.Group()
+#player = Player("rocket.png", 300 , 420, 45, 70)
+#monsters = sprite.Group()
 
-for i in range(5):
-  monsters.add(Enemy("ufo.png", randint(0,630), 0, 70, 45, randint(1,4))) 
+#for i in range(5):
+#  monsters.add(Enemy("ufo.png", randint(0,630), 0, 70, 45, randint(1,4))) 
 
-bullets = sprite.Group()
+#bullets = sprite.Group()
+
+ball = Ball("football.png", 250, 200, 50, 50, 1)
 
 txt_font = font.Font(None, 40)
 score = 0
@@ -78,11 +81,11 @@ message_lost = txt_font.render("Fallos: " + str(lost), True, (255,255,255))
 victory = font.Font(None, 80).render('¡¡Ganaste!!', True, (0,255,0))
 defeat = font.Font(None, 80).render('¡¡Perdiste!!', True, (255,0,0))
 
-mixer.init()
-mixer.music.load("./music_background.mp3")
-mixer.music.play()
-fire = mixer.Sound("fire.ogg")
-explosion = mixer.Sound("explosion.wav")
+#mixer.init()
+#mixer.music.load("./music_background.mp3")
+#mixer.music.play()
+#fire = mixer.Sound("fire.ogg")
+#explosion = mixer.Sound("explosion.wav")
 
 time_shot = timesec()
 run = True 
@@ -93,36 +96,36 @@ while run:
 
   
   if lost < 4 and score < 10:
-    keys_presed = key.get_pressed()
-    if (keys_presed[K_LEFT] or keys_presed[K_a]) and player.rect.left > 0: player.move(-5)
-    elif (keys_presed[K_RIGHT] or keys_presed[K_d]) and player.rect.right < 700: player.move(5)
-    else: player.move(0)
-    if keys_presed[K_SPACE]: 
-      if timesec() - time_shot > 0.5:
-        fire.play() 
-        player.fire()
-        time_shot = timesec()
+#    keys_presed = key.get_pressed()
+#    if (keys_presed[K_LEFT] or keys_presed[K_a]) and player.rect.left > 0: player.move(-5)
+#    elif (keys_presed[K_RIGHT] or keys_presed[K_d]) and player.rect.right < 700: player.move(5)
+#    else: player.move(0)
+#    if keys_presed[K_SPACE]: 
+#      if timesec() - time_shot > 0.5:
+#        fire.play() 
+#        player.fire()
+#        time_shot = timesec()
     
-    bullets.update()
-    player.update()
-    monsters.update()
+#    bullets.update()
+#    player.update()
+    ball.update()
   message_lost = txt_font.render("Fallos: " + str(lost), True, (255,255,255))
   message_score = txt_font.render("Puntaje: " + str(score), True, (255,255,255))
   
-  for enemy_defeat in sprite.groupcollide(monsters, bullets, True, True):
-    explosion.play()
-    score += 1
-    monsters.add(Enemy("ufo.png", randint(0,630), 0, 70, 45, randint(1,4)))
+#  for enemy_defeat in sprite.groupcollide(monsters, bullets, True, True):
+#    explosion.play()
+#    score += 1
+#    monsters.add(Enemy("ufo.png", randint(0,630), 0, 70, 45, randint(1,4)))
 
-  if len(sprite.spritecollide(player, monsters, True)) > 0:
-    explosion.play()
-    lost = 4
+#  if len(sprite.spritecollide(player, monsters, True)) > 0:
+#    explosion.play()
+#    lost = 4
   
   
-  background.reset()
-  bullets.draw(window)
-  player.reset()
-  monsters.draw(window)
+#  background.reset()
+#  bullets.draw(window)
+#  player.reset()
+  ball.reset()
   window.blit(message_score, (50,10))
   window.blit(message_lost, (50,40))
   if score >= 10:
