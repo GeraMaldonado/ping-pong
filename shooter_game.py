@@ -58,6 +58,7 @@ init()
 window = display.set_mode((700,500))
 display.set_caption("Tirador")
 #background = GameSprite("galaxy.jpg", 0, 0 ,700, 500)
+background = (127, 233, 240)
 
 clock = time.Clock()
 lost = 0
@@ -108,6 +109,7 @@ while run:
     
 #    bullets.update()
 #    player.update()
+    window.fill(background)
     ball.update()
   message_lost = txt_font.render("Fallos: " + str(lost), True, (255,255,255))
   message_score = txt_font.render("Puntaje: " + str(score), True, (255,255,255))
