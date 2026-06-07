@@ -49,6 +49,8 @@ clock = time.Clock()
 lost = 0
 
 ball = Ball("football.png", 250, 200, 50, 50, 1)
+player1 = Player("paleta.png", 10, 100, 25, 180, 2)
+player2 = Player("paleta.png", 665, 100, 25, 180, 2)
 
 txt_font = font.Font(None, 40)
 score = 0
@@ -76,6 +78,9 @@ while run:
   
 
   ball.reset()
+  player1.reset()
+  player2.reset()
+
   window.blit(message_score, (50,10))
   window.blit(message_lost, (50,40))
   if score >= 10:
