@@ -31,17 +31,29 @@ class Player(DinamicSprites):
 
 class Ball(DinamicSprites):
 
-  speedx = 5
-  speedy = -5
+  speedx = 0
+  speedy = 0
 
-  def update(self):
+  def update(self, p1, p2):
 
     self.rect.x += self.speedx
     self.rect.y += self.speedy
 
     if self.rect.top <= 0 or self.rect.bottom >= 500:
       self.speedy *= -1
-      
+
+    if self.rect.colliderect(p1) or self.rect.colliderect(p2):
+      self.speedx *= -1
+
+    elif self.rect.left >=  700:
+      print("Jugador1 uno anoto un punto")
+      self.rect.x = 250
+      self.rect.y = 200
+
+    elif self.rect.right <=  0:
+      print("Jugador2 uno anoto un punto")
+      self.rect.x = 250
+      self.rect.y = 200
        
 
 init()
@@ -81,13 +93,11 @@ while run:
   if keys_presed[K_UP] and player2.rect.top > 0: player2.move(-5)
   elif keys_presed[K_DOWN] and player2.rect.bottom < 500: player2.move(5)
   else: player2.move(0)
-    
-
 
   message_lost = txt_font.render("Fallos: " + str(lost), True, (255,255,255))
   message_score = txt_font.render("Puntaje: " + str(score), True, (255,255,255))
   window.fill(background)
-  ball.update()
+  ball.update(player1.rect, player2.rect)
   player1.update()
   player2.update() 
 
