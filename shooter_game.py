@@ -33,7 +33,6 @@ class Ball(DinamicSprites):
 
   speedx = 0
   speedy = 0
-
   def update(self, p1, p2):
 
     self.rect.x += self.speedx
