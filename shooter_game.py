@@ -30,14 +30,18 @@ class Player(DinamicSprites):
   
 
 class Ball(DinamicSprites):
-  def update(self):
-    global lost
 
-    if self.rect.top >= 500:
-      self.rect.x = randint(0,420)
-      self.rect.y = -45
-      self.speed = randint(1,6)
-      lost += 1
+  speedx = 5
+  speedy = -5
+
+  def update(self):
+
+    self.rect.x += self.speedx
+    self.rect.y += self.speedy
+
+    if self.rect.top <= 0 or self.rect.bottom >= 500:
+      self.speedy *= -1
+      
        
 
 init()
