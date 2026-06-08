@@ -22,11 +22,11 @@ class DinamicSprites(GameSprite):
 
 # clase del jugador principal
 class Player(DinamicSprites):
-  def move(self, speedx):
-    self.speed = speedx
+  def move(self, speedy):
+    self.speed = speedy
     
   def update(self):
-    self.rect.x += self.speed
+    self.rect.y += self.speed
   
 
 class Ball(DinamicSprites):
@@ -69,13 +69,23 @@ while run:
       run = False
 
   
-  if lost < 4 and score < 10:
 
-    window.fill(background)
-    ball.update()
+  keys_presed = key.get_pressed()
+  if keys_presed[K_w] and player1.rect.top > 0: player1.move(-5)
+  elif keys_presed[K_s] and player1.rect.bottom < 500: player1.move(5)
+  else: player1.move(0)
+  if keys_presed[K_UP] and player2.rect.top > 0: player2.move(-5)
+  elif keys_presed[K_DOWN] and player2.rect.bottom < 500: player2.move(5)
+  else: player2.move(0)
+    
+
+
   message_lost = txt_font.render("Fallos: " + str(lost), True, (255,255,255))
   message_score = txt_font.render("Puntaje: " + str(score), True, (255,255,255))
-  
+  window.fill(background)
+  ball.update()
+  player1.update()
+  player2.update() 
 
   ball.reset()
   player1.reset()
