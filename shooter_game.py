@@ -1,5 +1,5 @@
 from pygame import *
-from random import randint
+from random import shuffle
 from time import time as timesec
 #Modificaicones
 class GameSprite(sprite.Sprite):
@@ -31,8 +31,13 @@ class Player(DinamicSprites):
 
 class Ball(DinamicSprites):
 
-  speedx = 0
-  speedy = 0
+  def aleatorio(self):
+    velocidad = [5,-5]
+    shuffle(velocidad)
+    self.speedx = velocidad[0]
+    shuffle(velocidad)
+    self.speedy = velocidad[0]
+
   def update(self, p1, p2):
 
     self.rect.x += self.speedx
@@ -48,11 +53,13 @@ class Ball(DinamicSprites):
       print("Jugador1 uno anoto un punto")
       self.rect.x = 250
       self.rect.y = 200
+      self.aleatorio()
 
     elif self.rect.right <=  0:
       print("Jugador2 uno anoto un punto")
       self.rect.x = 250
       self.rect.y = 200
+      self.aleatorio()
        
 
 init()
@@ -64,6 +71,7 @@ clock = time.Clock()
 lost = 0
 
 ball = Ball("football.png", 250, 200, 50, 50, 1)
+ball.aleatorio()
 player1 = Player("paleta.png", 10, 100, 25, 180, 2)
 player2 = Player("paleta.png", 665, 100, 25, 180, 2)
 
